@@ -1,0 +1,21 @@
+{
+  "name": "phonebook-graphql",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon library-backend.js",
+    "dev": "nodemon library-backend.js"
+  },
+  "author": "Abigail Nottingham",
+  "license": "MIT",
+  "dependencies": {
+    "apollo-server": "^2.25.1",
+    "graphql": "^15.5.0",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
