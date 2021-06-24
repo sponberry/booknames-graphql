@@ -83,11 +83,28 @@ const resolvers = {
   },
   Mutation: {
     addBook: async (root, args) => {
+      if (args.title.length < 2) {
+        throw new UserInputError("title too short", {
+          invalidArgs: args.title,
+        })
+      }
+
       let author = await Author.findOne({ name: args.author })
 
       if (!author) {
+        if (args.author.length < 4) {
+          throw new UserInputError("author name too short", {
+            invalidArgs: args.author,
+          })
+        }
         author = new Author({ name: args.author })
-        await author.save()
+        try {
+          await author.save()
+        } catch (error) {
+          throw new UserInputError(error.message, {
+            invalidArgs: args,
+          })
+        }
       }
       try {
         const book = new Book({
@@ -110,10 +127,16 @@ const resolvers = {
           invalidArgs: args.name
         })
       }
-      const updatedAuthor= await Author.findByIdAndUpdate(authorToChange._id, {
-        born: args.setBornTo
-      })
-      return updatedAuthor
+      try {
+        const updatedAuthor= await Author.findByIdAndUpdate(authorToChange._id, {
+          born: args.setBornTo
+        })
+        return updatedAuthor
+      } catch (error) {
+        throw new UserInputError(error.message, {
+          invalidArgs: args,
+        })
+      }
     }
   }
 }
