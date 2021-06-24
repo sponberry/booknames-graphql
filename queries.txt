@@ -1,0 +1,69 @@
+query {
+  bookCount
+  authorCount
+}
+
+query {
+  allBooks { 
+    title 
+    author {
+      name
+    }
+    published 
+    genres
+  }
+}
+
+query {
+  allAuthors {
+    name
+    bookCount
+  }
+}
+
+query {
+  allBooks(author: "Robert Martin") {
+    title
+  }
+}
+
+query {
+  allBooks(genre: "refactoring") {
+    title
+    author
+  }
+}
+
+query {
+  allBooks(author: "Robert Martin", genre: "refactoring") {
+    title
+    author
+  }
+}
+
+mutation {
+  addBook(
+    title: "NoSQL Distilled",
+    author: "Martin Fowler",
+    published: 2012,
+    genres: ["database", "nosql"]
+  ) {
+    title,
+    author
+  }
+}
+
+query {
+  allAuthors {
+    name
+    born
+    bookCount
+  }
+}
+
+mutation {
+  editAuthor(name: "Reijo Mäki", setBornTo: 1958) {
+    name
+    born
+  }
+}
