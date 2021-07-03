@@ -92,19 +92,20 @@ const resolvers = {
         return Book.find({}).populate("author")
       }
       let filteredBooks = await Book.find({})
-      // if (args.author && !args.genre) {
-      //   const author = await Author.find({ name: { $eq: args.author }})
-      //   filteredBooks = await Book.find({ author: { $eq: author.id }})
-      // }
+      if (args.author && !args.genre) {
+        const author = await Author.findOne({ name: args.author })
+        filteredBooks = await Book.find({ author: { $eq: author._id }}).populate("author")
+      }
       if (args.genre && !args.author) {
         filteredBooks = await Book.find({ genres: { $in: args.genre }}).populate("author")
       }
-      // if (args.genre && args.author) {
-      //   filteredBooks = await Book.find({ 
-      //     genres: { $in: args.genre },
-      //     author: { $eq: args.author }
-      //   })
-      // }
+      if (args.genre && args.author) {
+        const author = await Author.findOne({ name: args.author })
+        filteredBooks = await Book.find({ 
+          genres: { $in: args.genre },
+          author: { $eq: author._id }
+        }).populate("author")
+      }
       return filteredBooks
     },
     allAuthors: () => {
