@@ -11,7 +11,7 @@ const pubsub = new PubSub()
 
 
 const JWT_SECRET = "lfdjgn384FDj38fd2ki"
-const MONGODB_URI = "mongodb+srv://fullstack:IpvOr7nesHFdwdah@cluster0.n70j8.mongodb.net/libraryGraphQL?retryWrites=true&w=majority"
+const MONGODB_URI = process.env.MONGODB_URI
 console.log(`connecting to ${MONGODB_URI}`)
 
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
